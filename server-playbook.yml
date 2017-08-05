@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  gather_facts: yes
+  roles:
+    - role: user
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: deploy
+          oh_my_zsh:
+            theme: robbyrussell
+            plugins:
+              - git
+              - vi-mode
+              - git-extras
+              - common-aliases
+    - role: rbenv
+    # - role: nginx
+    - role: geerlingguy.nodejs
