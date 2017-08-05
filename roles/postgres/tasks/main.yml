@@ -1,0 +1,32 @@
+- name: Install postgres
+  yum: name={{item}} state=present
+  become: True
+  with_items:
+    - postgresql
+    - postgresql-devel
+    - postgresql-server
+    - postgresql-contrib
+  tags:
+    - postgresql
+
+- name: initialize postgresql (CentOS)
+  shell: postgresql-setup initdb
+  args:
+    creates: /var/lib/pgsql/data/base
+  tags:
+    - postgresql
+
+- name: Config security for postgres user
+  lineinfile:
+    dest: /var/lib/pgsql/data/pg_hba.conf
+    regexp: '^local\s+all\s+postgres+\s+peer'
+    line: "local   all             postgres                                trust"
+    state: present
+  become: True
+  tags:
+    - postgresql
+
+- service: name=postgresql state=restarted enabled=yes
+  become: True
+  tags:
+    - postgresql

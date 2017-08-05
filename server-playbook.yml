@@ -17,5 +17,7 @@
               - git-extras
               - common-aliases
     - role: rbenv
+    - role: postgres
+    - role: nginx
     # - role: nginx
     - role: geerlingguy.nodejs
