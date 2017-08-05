@@ -4,6 +4,7 @@
   remote_user: root
   gather_facts: yes
   roles:
+    - role: common
     - role: user
     - role: gantsign.oh-my-zsh
       users:
